@@ -14,6 +14,8 @@ import Firebase
 class ViewController: UIViewController {
     
     var userAuthenticated: AuthDataResult?
+    
+    var userEmail: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,11 +27,15 @@ class ViewController: UIViewController {
         
         print("\(String(describing: userAuthenticated?.user.email))")
         
+        if let unwrapped = userAuthenticated?.user.email {
+            userEmail = unwrapped
+        }
+        
     }
     
     func loadCXProviderConfigurations() {
         
-    let provider = CXProvider(configuration: CXProviderConfiguration(localizedName: "CallKit"))
+    let provider = CXProvider(configuration: CXProviderConfiguration(localizedName: userEmail))
     
     provider.setDelegate(self, queue: nil)
     
@@ -78,7 +84,7 @@ extension ViewController: PKPushRegistryDelegate {
     
     func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
         
-        let config = CXProviderConfiguration(localizedName: "CallKit")
+        let config = CXProviderConfiguration(localizedName: userEmail)
         config.iconTemplateImageData = nil
         config.includesCallsInRecents = false
         config.supportsVideo = true
