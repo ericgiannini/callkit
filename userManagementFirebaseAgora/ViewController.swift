@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     
     var userAuthenticated: AuthDataResult?
     
-    var localizedName: String = ""
+    var valueName: String = ""
 
     var agoraKit: AgoraRtcEngineKit!
 
@@ -25,17 +25,17 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        loadCXProviderConfigurations()
+        loadCXProviderConfigurationsToMakeACall()
          
         loadPKPushRegistration()
         
         print("\(String(describing: userAuthenticated?.user.email))")
         
         if let unwrapped = userAuthenticated?.user.email {
-            localizedName = unwrapped
+            valueName = unwrapped
         }
         
-        labelLocalizedName.text = localizedName
+        labelLocalizedName.text = valueName
         
         initializeAgoraEngine()
         
@@ -62,8 +62,28 @@ class ViewController: UIViewController {
     func setChannelProfile() {
         agoraKit.setChannelProfile(.communication)
     }
-
+    @IBAction func simulateMakingACall(_ sender: Any) {
+        
+        loadCXProviderConfigurationsToMakeACall()
+        
+    }
+    
+    @IBAction func makingACall(_ sender: Any) {
+        joinChannel()
+    }
+    
+    
+    @IBAction func simulateReceivingACall(_ sender: Any) {
+        
+        loadCXProviderConfigurationsToReceiveACall()
+        
+    }
+    
+    
+    
     func joinChannel() {
+        
+        loadCXProviderConfigurationsToMakeACall()
         
         agoraKit.setDefaultAudioRouteToSpeakerphone(true)
         
@@ -94,18 +114,31 @@ class ViewController: UIViewController {
     }
     
     
-    
-    func loadCXProviderConfigurations() {
+    // make a call
+    func loadCXProviderConfigurationsToReceiveACall() {
         
-    let provider = CXProvider(configuration: CXProviderConfiguration(localizedName: localizedName))
+        let provider = CXProvider(configuration: CXProviderConfiguration(localizedName: AppID))
+        
+        provider.setDelegate(self, queue: nil)
+        
+        let update = CXCallUpdate()
+        
+        update.remoteHandle = CXHandle(type: .generic, value: valueName)
+        
+        provider.reportNewIncomingCall(with: UUID(), update: update, completion: { error in })
+        
+    }
     
-    provider.setDelegate(self, queue: nil)
-    
-    let update = CXCallUpdate()
-    
-    update.remoteHandle = CXHandle(type: .generic, value: "Eric")
-    
-    provider.reportNewIncomingCall(with: UUID(), update: update, completion: { error in })
+    func loadCXProviderConfigurationsToMakeACall() {
+        
+        let provider = CXProvider(configuration: CXProviderConfiguration(localizedName: AppID))
+        provider.setDelegate(self, queue: nil)
+        
+        let controller = CXCallController()
+        
+        let transaction = CXTransaction(action: CXStartCallAction(call: UUID(), handle: CXHandle(type: .generic, value: valueName)))
+        
+        controller.request(transaction, completion: { error in })
     }
     
     func loadPKPushRegistration() {
@@ -178,7 +211,7 @@ extension ViewController: PKPushRegistryDelegate {
     
     func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
         
-        let config = CXProviderConfiguration(localizedName: localizedName)
+        let config = CXProviderConfiguration(localizedName: AppID)
         config.iconTemplateImageData = nil
         config.includesCallsInRecents = false
         config.supportsVideo = true
@@ -186,7 +219,7 @@ extension ViewController: PKPushRegistryDelegate {
         let provider = CXProvider(configuration: config)
         provider.setDelegate(self, queue: nil)
         let update = CXCallUpdate()
-        update.remoteHandle = CXHandle(type: .generic, value: "Eric")
+        update.remoteHandle = CXHandle(type: .generic, value: valueName)
         update.hasVideo = true
         provider.reportNewIncomingCall(with: UUID(), update: update, completion: {error in}
         )

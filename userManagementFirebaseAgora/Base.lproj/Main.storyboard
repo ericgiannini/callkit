@@ -89,19 +89,39 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FoQ-pY-foz">
-                                <rect key="frame" x="111" y="52" width="153" height="25"/>
+                                <rect key="frame" x="111" y="41" width="153" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yPf-V6-px5">
-                                <rect key="frame" x="148" y="135" width="79" height="30"/>
+                                <rect key="frame" x="109" y="112" width="155" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Make a Call"/>
+                                <state key="normal" title="Simulate Making a Call"/>
+                                <connections>
+                                    <action selector="simulateMakingACall:" destination="APL-kT-GwB" eventType="touchUpInside" id="N6x-TI-11l"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4Y-Ks-zTg">
+                                <rect key="frame" x="142" y="74" width="92" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Making a Call"/>
+                                <connections>
+                                    <action selector="makingACall:" destination="APL-kT-GwB" eventType="touchUpInside" id="ths-eb-Pcl"/>
+                                    <action selector="simulateMakingACall:" destination="APL-kT-GwB" eventType="touchUpInside" id="iZ1-md-qT0"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0z6-Hk-0Fz">
+                                <rect key="frame" x="102" y="150" width="172" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Simulate Receiving a Call"/>
+                                <connections>
+                                    <action selector="simulateReceivingACall:" destination="APL-kT-GwB" eventType="touchUpInside" id="CTH-cX-uYa"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Wc-65-Vd8">
-                                <rect key="frame" x="159" y="230" width="56" height="30"/>
+                                <rect key="frame" x="160" y="188" width="56" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="End Call"/>
                             </button>
