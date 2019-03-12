@@ -60,10 +60,6 @@ class LoginViewController: UIViewController {
     
             }
     
-    @IBAction func userDidTapJoinChannelButton(_ sender: Any) {
-        
-         //        performSegue(withIdentifier: "loginToChannel", sender: UIButton.self)
-    }
     
     // MARK: - Navigation
     

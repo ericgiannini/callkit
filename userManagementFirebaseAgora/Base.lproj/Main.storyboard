@@ -38,13 +38,6 @@
                                     <action selector="userDidTapButtonRegister:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hmR-yk-2nW"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Js5-3X-AZc">
-                                <rect key="frame" x="224" y="356" width="110" height="30"/>
-                                <state key="normal" title="Join Channel"/>
-                                <connections>
-                                    <action selector="userDidTapJoinChannelButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Gy2-Fs-cls"/>
-                                </connections>
-                            </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="29N-3X-GO4">
                                 <rect key="frame" x="16" y="320" width="343" height="30"/>
                                 <nil key="textColor"/>
@@ -62,15 +55,12 @@
                         <constraints>
                             <constraint firstItem="tu5-Tj-l6s" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="200" id="01J-g5-hCf"/>
                             <constraint firstItem="yh0-6c-3eB" firstAttribute="leading" secondItem="29N-3X-GO4" secondAttribute="leading" id="1oh-23-NeP"/>
-                            <constraint firstItem="Js5-3X-AZc" firstAttribute="leading" secondItem="Th9-Nv-RJk" secondAttribute="trailing" constant="8" symbolic="YES" id="3eK-Va-eeT"/>
                             <constraint firstItem="29N-3X-GO4" firstAttribute="centerX" secondItem="Th9-Nv-RJk" secondAttribute="centerX" id="EFA-uX-86E"/>
                             <constraint firstItem="29N-3X-GO4" firstAttribute="top" secondItem="yh0-6c-3eB" secondAttribute="bottom" constant="25" id="Irj-Gf-6BW"/>
                             <constraint firstItem="yh0-6c-3eB" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="SBb-Yk-RoW"/>
                             <constraint firstItem="yh0-6c-3eB" firstAttribute="top" secondItem="tu5-Tj-l6s" secondAttribute="bottom" constant="25" id="SkT-Kp-U26"/>
                             <constraint firstItem="yh0-6c-3eB" firstAttribute="trailing" secondItem="29N-3X-GO4" secondAttribute="trailing" id="aGn-7c-9ra"/>
                             <constraint firstItem="29N-3X-GO4" firstAttribute="leading" secondItem="fdY-2z-AGL" secondAttribute="leading" id="bp6-2P-FAX"/>
-                            <constraint firstItem="Th9-Nv-RJk" firstAttribute="baseline" secondItem="Js5-3X-AZc" secondAttribute="baseline" id="g30-1A-6aU"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Js5-3X-AZc" secondAttribute="trailing" constant="41" id="mjc-8c-1CG"/>
                             <constraint firstItem="fdY-2z-AGL" firstAttribute="top" secondItem="29N-3X-GO4" secondAttribute="bottom" constant="6" id="oaD-No-FrJ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tu5-Tj-l6s" secondAttribute="trailing" constant="110" id="rNr-Pv-bKp"/>
                             <constraint firstItem="tu5-Tj-l6s" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="115" id="ykx-AM-HDm"/>
@@ -97,13 +87,35 @@
                     <view key="view" contentMode="scaleToFill" id="xpQ-2P-a4X">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FoQ-pY-foz">
+                                <rect key="frame" x="111" y="52" width="153" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yPf-V6-px5">
+                                <rect key="frame" x="148" y="135" width="79" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Make a Call"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Wc-65-Vd8">
+                                <rect key="frame" x="159" y="230" width="56" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="End Call"/>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="DEd-Xd-nnH"/>
                     </view>
+                    <connections>
+                        <outlet property="labelLocalizedName" destination="FoQ-pY-foz" id="Wyj-At-B0s"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Kd-Df-qHT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="676" y="130"/>
+            <point key="canvasLocation" x="676" y="129.98500749625188"/>
         </scene>
     </scenes>
 </document>
