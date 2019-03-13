@@ -1,39 +1,24 @@
-//
-//  ViewController.swift
-//  userManagementFirebaseAgora
-//
-//  Created by Floyd 2001 on 3/5/19.
-//  Copyright © 2019 Agora.io. All rights reserved.
-//
-
 import UIKit
-import CallKit
-import PushKit
 import Firebase
 import AgoraRtcEngineKit
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var stackView: UIStackView!
+    
     var userAuthenticated: AuthDataResult?
     
     var valueName: String = ""
-
+    
     var agoraKit: AgoraRtcEngineKit!
-
+    
     @IBOutlet weak var labelLocalizedName: UILabel!
+    
+    let localUID = UInt(UUID().hashValue)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        loadCXProviderConfigurationsToMakeACall()
-         
-        loadPKPushRegistration()
-        
-        print("\(String(describing: userAuthenticated?.user.email))")
-        
-        if let unwrapped = userAuthenticated?.user.email {
-            valueName = unwrapped
-        }
         
         labelLocalizedName.text = valueName
         
@@ -43,59 +28,71 @@ class ViewController: UIViewController {
         
         setChannelProfile()
         
+        joinChannel()
     }
     
+    func fakeCallKit() {
+        
+    }
     
     func initializeAgoraEngine() {
-        
         agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: AppID, delegate: self)
-        
     }
     
     func setupVideo() {
-        
         agoraKit.enableVideo()
         agoraKit.setVideoEncoderConfiguration(AgoraVideoEncoderConfiguration(size: AgoraVideoDimension640x360, frameRate: .fps15, bitrate: AgoraVideoBitrateStandard, orientationMode: .adaptative))
-        
     }
     
     func setChannelProfile() {
         agoraKit.setChannelProfile(.communication)
     }
+    
     @IBAction func simulateMakingACall(_ sender: Any) {
-        
-        loadCXProviderConfigurationsToMakeACall()
-        
+        AppDelegate.shared.callManager.startCall(handle: "987654321", videoEnabled: true)
     }
     
     @IBAction func makingACall(_ sender: Any) {
-        joinChannel()
+        //        joinChannel()
+        self.setupLocalVideo(uid: localUID)
     }
-    
     
     @IBAction func simulateReceivingACall(_ sender: Any) {
-        
-        loadCXProviderConfigurationsToReceiveACall()
-        
+        let backgroundTaskIdentifier = UIApplication.shared.beginBackgroundTask(expirationHandler: nil)
+        DispatchQueue.main.asyncAfter(wallDeadline: DispatchWallTime.now() + 1.5) {
+            AppDelegate.shared.displayIncomingCall(uuid: UUID(), handle: "987654321", hasVideo: true) { error in
+                UIApplication.shared.endBackgroundTask(backgroundTaskIdentifier)
+                if error == nil {
+                    self.setupLocalVideo(uid: self.localUID)
+                }
+            }
+        }
     }
     
-    
+    @IBAction func endCall(_ sender: Any) {
+        agoraKit.leaveChannel(nil)
+        UIApplication.shared.isIdleTimerDisabled = false
+        
+        guard let view = stackView.arrangedSubviews.first(where: { (view) -> Bool in
+            return view.tag == localUID
+        }) else { return }
+        
+        stackView.removeArrangedSubview(view)
+    }
     
     func joinChannel() {
         
-        loadCXProviderConfigurationsToMakeACall()
-        
         agoraKit.setDefaultAudioRouteToSpeakerphone(true)
         
-        agoraKit.joinChannel(byToken: nil, channelId: "DemoChannel", info: nil, uid: 0) { [weak self] (sid, uid, elapsed) -> Void in
-        
-        guard let _self = self else { return }
-        DispatchQueue.main.async {
-        _self.setupLocalVideo(uid: uid)
+        agoraKit.joinChannel(byToken: nil, channelId: "DemoChannel", info: nil, uid: localUID) { (sid, uid, elapsed) -> Void in
+            
+            //            DispatchQueue.main.async {
+            //                self.setupLocalVideo(uid: uid)
+            //            }
         }
+        
+        UIApplication.shared.isIdleTimerDisabled = true
     }
-    UIApplication.shared.isIdleTimerDisabled = true
-}
     
     func setupLocalVideo(uid: UInt) {
         
@@ -109,52 +106,19 @@ class ViewController: UIViewController {
         videoCanvas.renderMode = .hidden
         agoraKit.setupLocalVideo(videoCanvas)
         
-//        stackView.addArrangedSubview(videoView)
-        
-    }
-    
-    
-    // make a call
-    func loadCXProviderConfigurationsToReceiveACall() {
-        
-        let provider = CXProvider(configuration: CXProviderConfiguration(localizedName: AppID))
-        
-        provider.setDelegate(self, queue: nil)
-        
-        let update = CXCallUpdate()
-        
-        update.remoteHandle = CXHandle(type: .generic, value: valueName)
-        
-        provider.reportNewIncomingCall(with: UUID(), update: update, completion: { error in })
-        
-    }
-    
-    func loadCXProviderConfigurationsToMakeACall() {
-        
-        let provider = CXProvider(configuration: CXProviderConfiguration(localizedName: AppID))
-        provider.setDelegate(self, queue: nil)
-        
-        let controller = CXCallController()
-        
-        let transaction = CXTransaction(action: CXStartCallAction(call: UUID(), handle: CXHandle(type: .generic, value: valueName)))
-        
-        controller.request(transaction, completion: { error in })
-    }
-    
-    func loadPKPushRegistration() {
-        
-        let registry = PKPushRegistry(queue: nil)
-        
-        registry.delegate = self
-        
-        registry.desiredPushTypes = [PKPushType.voIP]
-        
+        stackView.addArrangedSubview(videoView)
     }
 }
 
 extension ViewController: AgoraRtcEngineDelegate {
     
     func rtcEngine(_ engine: AgoraRtcEngineKit, firstRemoteVideoFrameOfUid uid: UInt, size: CGSize, elapsed: Int) {
+        print(#function)
+    }
+    
+    func rtcEngine(_ engine: AgoraRtcEngineKit, firstRemoteVideoDecodedOfUid uid:UInt, size:CGSize, elapsed:Int) {
+        
+        print(#function)
         let videoView = UIView()
         videoView.tag = Int(uid)
         videoView.backgroundColor = UIColor.purple
@@ -165,63 +129,19 @@ extension ViewController: AgoraRtcEngineDelegate {
         videoCanvas.renderMode = .hidden
         agoraKit.setupRemoteVideo(videoCanvas)
         
-//        stackView.addArrangedSubview(view)
-        
+        self.stackView.addArrangedSubview(videoView)
     }
     
     internal func rtcEngine(_ engine: AgoraRtcEngineKit, didOfflineOfUid uid:UInt, reason:AgoraUserOfflineReason) {
         
-//        guard let view = stackView.arrangedSubviews.first(where: { (view) -> Bool in
-//            return view.tag == Int(uid)
-//        }) else { return }
+        guard let view = stackView.arrangedSubviews.first(where: { (view) -> Bool in
+            return view.tag == Int(uid)
+        }) else { return }
         
-//        stackView.removeArrangedSubview(view)
+        stackView.removeArrangedSubview(view)
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit, didVideoMuted muted: Bool, byUid uid: UInt) {
         //
-    }
-    
-}
-
-extension ViewController: CXProviderDelegate {
-    
-    // answer
-    func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
-        action.fulfill()
-    }
-   
-    // end
-    func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
-        action.fulfill()
-    }
-
-    // reset
-    func providerDidReset(_ provider: CXProvider) {
-    }
-    
-}
-
-extension ViewController: PKPushRegistryDelegate {
-    
-    // update registry with push credentials
-    func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
-        
-    }
-    
-    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
-        
-        let config = CXProviderConfiguration(localizedName: AppID)
-        config.iconTemplateImageData = nil
-        config.includesCallsInRecents = false
-        config.supportsVideo = true
-        
-        let provider = CXProvider(configuration: config)
-        provider.setDelegate(self, queue: nil)
-        let update = CXCallUpdate()
-        update.remoteHandle = CXHandle(type: .generic, value: valueName)
-        update.hasVideo = true
-        provider.reportNewIncomingCall(with: UUID(), update: update, completion: {error in}
-        )
     }
 }

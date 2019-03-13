@@ -14,6 +14,10 @@
 		15BEB428222F2C610033F7C5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15BEB426222F2C610033F7C5 /* LaunchScreen.storyboard */; };
 		15BEB430222F34790033F7C5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BEB42F222F34790033F7C5 /* LoginViewController.swift */; };
 		15F220952231EDE400A59B93 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15F220942231EDE400A59B93 /* GoogleService-Info.plist */; };
+		15F22097223971F400A59B93 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F22096223971F400A59B93 /* Audio.swift */; };
+		15F2209A2239728F00A59B93 /* Call.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F220992239728F00A59B93 /* Call.swift */; };
+		15F2209C223972B200A59B93 /* CallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F2209B223972B200A59B93 /* CallManager.swift */; };
+		15F2209E223972CA00A59B93 /* ProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F2209D223972CA00A59B93 /* ProviderDelegate.swift */; };
 		FACE0B32E810AB51ECA92B2C /* Pods_userManagementFirebaseAgora.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AA217A3D6D8D3ECB4075363 /* Pods_userManagementFirebaseAgora.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +31,10 @@
 		15BEB429222F2C610033F7C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		15BEB42F222F34790033F7C5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		15F220942231EDE400A59B93 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		15F22096223971F400A59B93 /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
+		15F220992239728F00A59B93 /* Call.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Call.swift; sourceTree = "<group>"; };
+		15F2209B223972B200A59B93 /* CallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallManager.swift; sourceTree = "<group>"; };
+		15F2209D223972CA00A59B93 /* ProviderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderDelegate.swift; sourceTree = "<group>"; };
 		7AA217A3D6D8D3ECB4075363 /* Pods_userManagementFirebaseAgora.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_userManagementFirebaseAgora.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2D3EBB7E586EE8F2C46A04E /* Pods-userManagementFirebaseAgora.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-userManagementFirebaseAgora.release.xcconfig"; path = "Target Support Files/Pods-userManagementFirebaseAgora/Pods-userManagementFirebaseAgora.release.xcconfig"; sourceTree = "<group>"; };
 		ECF5C20DF8E1DCA79FBFA32C /* Pods-userManagementFirebaseAgora.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-userManagementFirebaseAgora.debug.xcconfig"; path = "Target Support Files/Pods-userManagementFirebaseAgora/Pods-userManagementFirebaseAgora.debug.xcconfig"; sourceTree = "<group>"; };
@@ -73,8 +81,20 @@
 				15BEB426222F2C610033F7C5 /* LaunchScreen.storyboard */,
 				15BEB429222F2C610033F7C5 /* Info.plist */,
 				15F220942231EDE400A59B93 /* GoogleService-Info.plist */,
+				15F22098223971FD00A59B93 /* CallKit */,
 			);
 			path = userManagementFirebaseAgora;
+			sourceTree = "<group>";
+		};
+		15F22098223971FD00A59B93 /* CallKit */ = {
+			isa = PBXGroup;
+			children = (
+				15F22096223971F400A59B93 /* Audio.swift */,
+				15F220992239728F00A59B93 /* Call.swift */,
+				15F2209B223972B200A59B93 /* CallManager.swift */,
+				15F2209D223972CA00A59B93 /* ProviderDelegate.swift */,
+			);
+			path = CallKit;
 			sourceTree = "<group>";
 		};
 		72473BB4A3E94AF01AAAA743 /* Pods */ = {
@@ -219,7 +239,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15F22097223971F400A59B93 /* Audio.swift in Sources */,
 				15BEB430222F34790033F7C5 /* LoginViewController.swift in Sources */,
+				15F2209E223972CA00A59B93 /* ProviderDelegate.swift in Sources */,
+				15F2209A2239728F00A59B93 /* Call.swift in Sources */,
+				15F2209C223972B200A59B93 /* CallManager.swift in Sources */,
 				15BEB420222F2C5E0033F7C5 /* ViewController.swift in Sources */,
 				15BEB41E222F2C5E0033F7C5 /* AppDelegate.swift in Sources */,
 			);
