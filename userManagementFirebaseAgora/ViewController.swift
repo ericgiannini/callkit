@@ -18,7 +18,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         labelLocalizedName.text = valueName
         
@@ -49,7 +48,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func simulateMakingACall(_ sender: Any) {
-        AppDelegate.shared.callManager.startCall(handle: "987654321", videoEnabled: true)
+        AppDelegate.shared.callManager.startCall(handle: valueName, videoEnabled: true)
     }
     
     @IBAction func makingACall(_ sender: Any) {
@@ -60,7 +59,7 @@ class ViewController: UIViewController {
     @IBAction func simulateReceivingACall(_ sender: Any) {
         let backgroundTaskIdentifier = UIApplication.shared.beginBackgroundTask(expirationHandler: nil)
         DispatchQueue.main.asyncAfter(wallDeadline: DispatchWallTime.now() + 1.5) {
-            AppDelegate.shared.displayIncomingCall(uuid: UUID(), handle: "987654321", hasVideo: true) { error in
+            AppDelegate.shared.displayIncomingCall(uuid: UUID(), handle: self.valueName, hasVideo: true) { error in
                 UIApplication.shared.endBackgroundTask(backgroundTaskIdentifier)
                 if error == nil {
                     self.setupLocalVideo(uid: self.localUID)
