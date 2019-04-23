@@ -38,7 +38,7 @@ class ProviderDelegate: NSObject {
     }
     
     static var providerConfiguration: CXProviderConfiguration {
-        let providerConfiguration = CXProviderConfiguration(localizedName: "FireAgora")
+        let providerConfiguration = CXProviderConfiguration(localizedName: "\(AppID)")
         
         providerConfiguration.supportsVideo = true
         providerConfiguration.maximumCallsPerCallGroup = 1

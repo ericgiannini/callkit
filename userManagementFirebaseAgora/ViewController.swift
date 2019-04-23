@@ -52,7 +52,6 @@ class ViewController: UIViewController {
     }
     
     @IBAction func makingACall(_ sender: Any) {
-        //        joinChannel()
         self.setupLocalVideo(uid: localUID)
     }
     
@@ -84,10 +83,6 @@ class ViewController: UIViewController {
         agoraKit.setDefaultAudioRouteToSpeakerphone(true)
         
         agoraKit.joinChannel(byToken: nil, channelId: "DemoChannel", info: nil, uid: localUID) { (sid, uid, elapsed) -> Void in
-            
-            //            DispatchQueue.main.async {
-            //                self.setupLocalVideo(uid: uid)
-            //            }
         }
         
         UIApplication.shared.isIdleTimerDisabled = true
